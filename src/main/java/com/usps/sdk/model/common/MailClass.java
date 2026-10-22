@@ -1,0 +1,18 @@
+package com.usps.sdk.model.common;
+
+/**
+ * Standard USPS Mail Classes.
+ */
+public enum MailClass {
+    PRIORITY_MAIL,
+    PRIORITY_MAIL_EXPRESS,
+    USPS_GROUND_ADVANTAGE,
+    FIRST_CLASS_MAIL,
+    PARCEL_SELECT,
+    PARCEL_SELECT_LIGHTWEIGHT,
+    MEDIA_MAIL,
+    LIBRARY_MAIL,
+    BOUND_PRINTED_MATTER,
+    USPS_CONNECT_LOCAL,
+    USPS_CONNECT_REGIONAL
+}

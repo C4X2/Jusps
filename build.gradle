@@ -1,0 +1,67 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'com.usps.sdk'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    withJavadocJar()
+    withSourcesJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Jackson for JSON processing
+    api 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    testCompileOnly 'org.projectlombok:lombok:1.18.34'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    // SLF4J Logging API
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+
+    // Testing dependencies
+    testImplementation platform('org.junit:junit-bom:5.10.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.16'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = 'USPS Java SDK'
+                description = 'Modern, high-performance Java SDK for the official USPS Developer Portal REST APIs (v3)'
+                url = 'https://github.com/usps/usps-java-sdk'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+            }
+        }
+    }
+}
