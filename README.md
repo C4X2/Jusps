@@ -35,7 +35,7 @@ Built on Java 21 LTS with Project Lombok, Jackson, native `java.net.http.HttpCli
 
 ```kotlin
 dependencies {
-    implementation("com.usps.sdk:usps-java-sdk:1.0.0")
+    implementation("io.github.c4x2:jusps:1.0.0")
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
 }
@@ -45,7 +45,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.usps.sdk:usps-java-sdk:1.0.0'
+    implementation 'io.github.c4x2:jusps:1.0.0'
     compileOnly 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
 }
@@ -55,8 +55,8 @@ dependencies {
 
 ```xml
 <dependency>
-    <groupId>com.usps.sdk</groupId>
-    <artifactId>usps-java-sdk</artifactId>
+    <groupId>io.github.c4x2</groupId>
+    <artifactId>jusps</artifactId>
     <version>1.0.0</version>
 </dependency>
 <dependency>
@@ -74,8 +74,8 @@ dependencies {
 ### 1. Initialize the Client
 
 ```java
-import com.usps.sdk.UspsClient;
-import com.usps.sdk.config.UspsEnvironment;
+import io.github.c4x2.jusps.UspsClient;
+import io.github.c4x2.jusps.config.UspsEnvironment;
 import java.time.Duration;
 
 UspsClient client = UspsClient.builder()
@@ -95,8 +95,8 @@ UspsClient client = UspsClient.builder()
 ### 1. Address Standardization & Validation (Addresses 3.0)
 
 ```java
-import com.usps.sdk.model.address.AddressRequest;
-import com.usps.sdk.model.address.AddressResponse;
+import io.github.c4x2.jusps.model.address.AddressRequest;
+import io.github.c4x2.jusps.model.address.AddressResponse;
 
 AddressRequest request = AddressRequest.builder()
     .streetAddress("1600 Pennsylvania Ave NW")
@@ -138,8 +138,8 @@ System.out.println("ZIP Code: " + zipResponse.getAddress().getFullZip());
 ### 2. Package Tracking (Tracking 3.0)
 
 ```java
-import com.usps.sdk.model.tracking.TrackInfo;
-import com.usps.sdk.model.tracking.TrackingEvent;
+import io.github.c4x2.jusps.model.tracking.TrackInfo;
+import io.github.c4x2.jusps.model.tracking.TrackingEvent;
 
 TrackInfo tracking = client.tracking().getTracking("9400100000000000000000");
 
@@ -161,10 +161,10 @@ for (TrackingEvent event : tracking.getTrackDetail()) {
 #### Calculate Base Rates for a Specific Mail Class
 
 ```java
-import com.usps.sdk.model.common.MailClass;
-import com.usps.sdk.model.common.PriceType;
-import com.usps.sdk.model.prices.BaseRatesRequest;
-import com.usps.sdk.model.prices.RateResponse;
+import io.github.c4x2.jusps.model.common.MailClass;
+import io.github.c4x2.jusps.model.common.PriceType;
+import io.github.c4x2.jusps.model.prices.BaseRatesRequest;
+import io.github.c4x2.jusps.model.prices.RateResponse;
 
 BaseRatesRequest rateRequest = BaseRatesRequest.builder()
     .originZIPCode("90210")
@@ -182,8 +182,8 @@ System.out.println("Postage: $" + rate.getTotalBasePrice() + " (Zone " + rate.ge
 #### Total Rates Search Across All Eligible Services
 
 ```java
-import com.usps.sdk.model.prices.TotalRatesRequest;
-import com.usps.sdk.model.prices.RateOption;
+import io.github.c4x2.jusps.model.prices.TotalRatesRequest;
+import io.github.c4x2.jusps.model.prices.RateOption;
 
 TotalRatesRequest totalRequest = TotalRatesRequest.builder()
     .originZIPCode("30301")
@@ -203,9 +203,9 @@ for (RateOption opt : allRates.getRates()) {
 ### 4. Shipping Labels (Labels 3.0)
 
 ```java
-import com.usps.sdk.model.common.Address;
-import com.usps.sdk.model.common.MailClass;
-import com.usps.sdk.model.labels.*;
+import io.github.c4x2.jusps.model.common.Address;
+import io.github.c4x2.jusps.model.common.MailClass;
+import io.github.c4x2.jusps.model.labels.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -256,9 +256,9 @@ client.labels().cancelLabel(label.getLabelId());
 ### 5. Service Delivery Standards (Service Standards 3.0)
 
 ```java
-import com.usps.sdk.model.standards.ServiceStandardRequest;
-import com.usps.sdk.model.standards.ServiceStandardResponse;
-import com.usps.sdk.model.standards.ServiceStandardEstimate;
+import io.github.c4x2.jusps.model.standards.ServiceStandardRequest;
+import io.github.c4x2.jusps.model.standards.ServiceStandardResponse;
+import io.github.c4x2.jusps.model.standards.ServiceStandardEstimate;
 
 ServiceStandardRequest request = ServiceStandardRequest.builder()
     .originZIPCode("10018")
@@ -276,9 +276,9 @@ for (ServiceStandardEstimate estimate : response.getEstimates()) {
 ### 6. Locations (Locations 3.0)
 
 ```java
-import com.usps.sdk.model.locations.PostOfficeLocationsRequest;
-import com.usps.sdk.model.locations.LocationResponse;
-import com.usps.sdk.model.locations.LocationFacility;
+import io.github.c4x2.jusps.model.locations.PostOfficeLocationsRequest;
+import io.github.c4x2.jusps.model.locations.LocationResponse;
+import io.github.c4x2.jusps.model.locations.LocationFacility;
 
 // Find retail Post Offices within 5 miles
 LocationResponse postOffices = client.locations().getPostOffices(
@@ -298,8 +298,8 @@ for (LocationFacility po : postOffices.getLocations()) {
 ### 7. Carrier Package Pickup (Carrier Pickup 3.0)
 
 ```java
-import com.usps.sdk.model.pickup.*;
-import com.usps.sdk.model.common.Address;
+import io.github.c4x2.jusps.model.pickup.*;
+import io.github.c4x2.jusps.model.common.Address;
 
 Address pickupAddr = Address.builder()
     .streetAddress("123 Main St")
@@ -372,7 +372,7 @@ UspsException (RuntimeException)
 ```
 
 ```java
-import com.usps.sdk.exception.*;
+import io.github.c4x2.jusps.exception.*;
 
 try {
     client.tracking().getTracking("INVALID_NUMBER");

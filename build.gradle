@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.usps.sdk'
+group = 'io.github.c4x2'
 version = '1.0.0'
 
 java {
@@ -52,14 +52,26 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
             pom {
-                name = 'USPS Java SDK'
+                name = 'Jusps'
                 description = 'Modern, high-performance Java SDK for the official USPS Developer Portal REST APIs (v3)'
-                url = 'https://github.com/usps/usps-java-sdk'
+                url = 'https://github.com/C4X2/Jusps'
                 licenses {
                     license {
                         name = 'MIT License'
                         url = 'https://opensource.org/licenses/MIT'
                     }
+                }
+                developers {
+                    developer {
+                        id = 'c4x2'
+                        name = 'C4X2'
+                        url = 'https://github.com/C4X2'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/C4X2/Jusps.git'
+                    developerConnection = 'scm:git:ssh://github.com:C4X2/Jusps.git'
+                    url = 'https://github.com/C4X2/Jusps'
                 }
             }
         }
